@@ -5,14 +5,13 @@ from diffusers import AutoencoderKL
 from torchvision import transforms
 from PIL import Image
 
-# ---- Image variables ----
+# Image variables 
 INPUT_PATH  = "dogTest.png"
 OUTPUT_PATH = "reconstruction.png"
 SIZE        = 512       # SD VAE expects 512x512 typically
 SIGMA       = 0.10      # AWGN std in latent space
 N_BITS      = 6         # uniform quantization bits (e.g., 3..8)
 DROPOUT_P   = 0.00      # element-wise dropout prob on z
-# -----------------------------
 
 # Shouldn't take too long on CPU ******** check later for lab
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -51,7 +50,6 @@ with torch.no_grad():
     if DROPOUT_P > 0:
         mask = (torch.rand_like(z) > DROPOUT_P).float()
         z = z * mask
-    # ----------------------------------------------------------
 
     # Decode: latent -> image (invert scaling_factor)
     x_hat = vae.decode(z / sf).sample  # in [-1,1]
