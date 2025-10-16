@@ -13,10 +13,6 @@ dist/
 venv/
 env/
 
-# IDE
-.vscode/
-.idea/
-
 # OS
 .DS_Store
 Thumbs.db
